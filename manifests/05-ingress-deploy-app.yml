@@ -1,0 +1,26 @@
+# Step - 3 of Ingress
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: test
+  name: robofarm-ingress-nginx 
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: robofarm.local
+    http:
+      paths:
+      - path: /robo
+        backend:
+          serviceName: robofarm-cl-svc
+          servicePort: 8080
+
+      - path: /
+        backend:
+          serviceName: robofarm-cl-svc
+          servicePort: 8080
+     
+# kubectl set image deployment/robofarm robofarm=reju/robofarm  -n test
+# kubectl rollout status deployment/robofarm -n test

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: robofarm-np-svc
+  namespace: test
+  labels:
+    app: robofarm
+spec:
+  selector:
+    app: robofarm
+    
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: robofarm-cl-svc
+  namespace: test
+  labels:
+    app: robofarm
+spec:
+  selector:
+    app: robofarm
+    
+  type: ClusterIP
+  ports:  
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+
+# kubectl proxy --port=1080 will start a new porxy on machine where kubectl is being run
+# curl http://localhost:1080/api/v1/proxy/namespaces/test/services/robofarm-cl-svc:8080/
+# https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0

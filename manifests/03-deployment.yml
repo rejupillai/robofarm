@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: test
+  name: robofarm
+spec:
+  replicas: 3  # replicas
+  selector:
+    matchLabels:
+      app: robofarm
+  template:
+    metadata:
+      labels:
+        app: robofarm
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers: 
+      - name: robofarm
+        image: reju/robofarm:1.0
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 8080
+
+# https://unofficial-kubernetes.readthedocs.io/en/latest/concepts/workloads/controllers/deployment/
+
+
+         
